@@ -1,7 +1,14 @@
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import HttpResponse,JsonResponse,Http404
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import authenticate
+from .models import userToken,generatedCode,userAccount
 import socket
+
+#
+def home(request):
+    return render(request,"index.html")
+
 # Create your views here.
 def index(request):
     return JsonResponse([socket.gethostbyname(socket.gethostname())],safe=False)
@@ -90,3 +97,56 @@ def record(request):
             }
         ],safe=False
     )
+
+
+class profile:
+    @csrf_exempt
+    def authenticateUser(request):
+        count = False
+        if request.method == "POST":
+            try:
+                userToken.objects.get(token = request.POST["q"])
+                count = True
+            except:
+                count = False
+            return JsonResponse([count],safe=False)
+        return Http404
+    
+    @csrf_exempt
+    def login(request):
+        if request.method == "POST":
+            user = authenticate(request, username = request.POST["username"], password= request.POST["password"])
+            if user is not None:
+                try:
+                    setToken = generatedCode()
+                    userToken.objects.create(token=setToken,registeredUser = user)
+                    return JsonResponse({"message":True,"user":setToken},safe=False)
+                except:
+                    return JsonResponse({"message":False},safe=False)    
+            return JsonResponse({"message":False},safe=False)
+        else:
+            return JsonResponse(["Request Failed"],safe=False)
+        
+    @csrf_exempt
+    def profile(request):
+        if request.method == "POST":
+            try:
+                profileData = userToken.objects.get(token = request.POST["token"])
+                verifiedAccount = False
+                testAccount = 0
+                try:
+                    testAccount = userAccount.objects.get(registeredUser = profileData.registeredUser)
+                    verifiedAccount = True
+                except:
+                    pass 
+                x = {
+                    "email":profileData.registeredUser.email,
+                    "username":profileData.registeredUser.username,
+                    "verified":verifiedAccount,
+                    "tester":profileData.id
+                }
+                return JsonResponse({"message":True,"profile":x},safe=False)
+            except:
+                return JsonResponse({"message":False},safe=False)
+        return JsonResponse({"message":False},safe=False)
+        

@@ -41,7 +41,7 @@ button
         .modal-body
             font-size: 24px
             paddin: 10px 0px
-            .form-control
+            .modal-form-control
                 text-align: left
                 display: block
                 padding: 5px 0px
@@ -57,6 +57,7 @@ button
                     font-size: 20px
         .modal-footer
             padding: 10px 0px
+            text-align: center
             button
                 padding: 5px 20px
                 border-radius: 10px
@@ -78,11 +79,160 @@ button
         max-width: 1000px
         background: white
         padding: 20px 2px
+        .border
+            border-bottom: .5px solid gray
         .form-header
             display: flex
             justify-content: space-evenly
             text-align: center
             img
-                height: 120px
+                height: 100px
         .form-body
             padding: 20px 0px
+            .questionTitle
+                font-size: 17px
+                padding: 10px 0px
+                .block-block
+                    height: 5px
+                    margin: 5px 0px
+                    background: green
+                input
+                    font-size: 17px
+                    border-radius: 8px
+                    width: -webkit-fill-available
+            .questionAnswer,.questionButton
+                margin: 10px 
+            .answerButton
+                background: orange
+                font-size: 17px !important
+            .questionButton
+                background: green
+                font-size: 20px !important
+            .questionQuestion
+                max-width: 600px
+                margin: 0 auto
+                padding-top: 5px
+            .questionAnswer
+                max-width: 500px
+                margin: 0 auto
+                position: relative
+                .removeDesign
+                    position: absolute
+                    right:-33px
+                    top: 8px
+                    div
+                        padding: 3px 10px
+                        border-radius: 0px !important
+                        cursor: pointer
+                        color: white !important
+
+.cat-testing
+    display: flex
+    justify-content: space-between
+    p
+        max-width: 400px
+        text-align: left
+    div
+        padding: 5px 20px
+        font-size: 15px
+        cursor: pointer
+        color: white
+       
+
+.choice-border-left
+    border-left: 4px solid orange
+    border-bottom: 4px solid orange
+    padding-bottom: 5px
+
+.question-border-left
+    border-left: 4px solid green
+    border-bottom: 4px solid green
+
+.form-group
+    display: flex
+    flex-wrap: wrap
+    .codeAlign
+        width: 10%
+    .questionAlign
+        width: 89%
+.form-control
+    border: .5px solid gray
+    margin: 3px 0px
+    width: fit-content
+    text-align: center
+    .code
+        text-transform: uppercase
+        width: 34px
+        text-align: center
+        
+    input
+        border: none
+        padding: 10px
+        width: 97.5%
+        width: -webkit-fill-available
+        &:focus
+            outline: none
+
+.delete-button
+    background: red !important
+    font-size: 15px
+    border-radius: 0px
+
+.item-right
+    text-align: right
+
+.item-center
+    text-align: center
+.categoryButton
+    margin: 0 auto
+.question-title
+    font-size: 23px
+    padding: 16px 10px 0px 10px
+    font-weight: 600
+.question-form
+    position: relative
+    .question-item
+        padding: 30px 10px
+        font-size: 17px
+        p
+            padding: 5px 0px
+            font-weight: 600
+            span
+                padding: 0px 10px
+                font-weight: 700
+        .question-choices
+            padding: 5px 0px
+            .choices-choices
+                display: flex
+                padding: 6px 0px
+                input
+                    padding: 0px 9px
+                span
+                    padding: 0px 10px
+                .choice
+                    display:flex 
+                    padding: 5px
+                    border-radius: 5px
+                    cursor: pointer
+        .active
+            background: green
+            color: white
+
+.question-details
+    padding: 0px 20px
+
+
+@media screen and (max-width: 730px)
+    .form-header-details
+        display: none
+
+.login-administrator
+    position: absolute
+    top: 0px
+    right: 0px
+    font-size: 17px
+    color: blue
+    padding: 5px
+    cursor: pointer
+    &:hover
+        font-weight: 600
