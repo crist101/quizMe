@@ -2,48 +2,21 @@ from django.db import models
 import datetime
 from django.contrib.auth.models import User
 import random,datetime
-def generatedCode():
-    return '%64x' % random.getrandbits(16*16)
 # Create your models here.
 
-datetoday = datetime.datetime.now()
-datetoday = datetoday.replace(year=datetoday.year+1)
-class userToken(models.Model):
-    token = models.CharField(unique=True,max_length=155,default=generatedCode())
-    registeredUser = models.ForeignKey(User,related_name="registereduser",on_delete=models.DO_NOTHING)
-    dateLogin = models.DateTimeField(default=datetoday)
-    expirationDate = models.DateTimeField(default=datetoday)
-    def __str__(self) -> str:
-        return f"{self.token} | {self.registeredUser}"
-genderChoices = (
-    ("Male","Male"),
-    ("Female","Female")
-    )
-
-class userAccount(models.Model):
-    registeredUser = models.ForeignKey(User,related_name="userAccount",on_delete=models.DO_NOTHING)
-    birthdate = models.DateField(null=True)
-    gender = models.CharField(choices=genderChoices,max_length=155)
-    address = models.TextField()
-    organization = models.CharField(max_length=150)
-    ogganizationAddress = models.TextField()
-    dateAccomplished = models.DateTimeField(default=datetime.datetime.now)
-    
-    
-    def __str__(self) -> str:
-        return f"{self.registeredUser}"
 
 class quizRecord(models.Model):
-    accessKey = models.CharField(max_length=10)
+    accessKey = models.CharField(max_length=10,unique=True)
     title = models.CharField(max_length=155)
     subject = models.CharField(max_length = 155)
     yearAndSection = models.CharField(max_length = 155)
-    questionaire = models.JSONField()
-    answer = models.JSONField()
-    totalItem = models.IntegerField()
-    dateCreated = datetime.datetime.now
-    expirationDate = models.DateTimeField(default=datetime.datetime.now)
-    uniqueKey = models.CharField(max_length=125)
+    questionnaire = models.JSONField()
+    multipleChoice = models.IntegerField(default=0)
+    trueOrFalse = models.IntegerField(default=0)
+    totalItem = models.IntegerField(default=0)
+    dateCreated = models.DateTimeField(default=datetime.datetime.now)
+    online = models.BooleanField(default=False)
+
     def __str__(self) -> str:
         return f"{self.title} | {self.subject} | {self.yearAndSection}"
 

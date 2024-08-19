@@ -1,0 +1,443 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  font-family: "arial";
+}
+
+button {
+  padding: 5px 20px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  background: blue;
+  color: white;
+}
+
+.modal {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px);
+  display: grid;
+  place-content: center;
+}
+.modal .modal-content {
+  max-width: 700px;
+  width: 350px;
+  background: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 9px;
+  padding: 10px;
+}
+.modal .modal-content .modal-header {
+  text-align: right;
+  display: flex;
+  justify-content: space-between;
+}
+.modal .modal-content .modal-header h1 {
+  font-size: 24px;
+}
+.modal .modal-content .modal-header a {
+  font-size: 24px;
+  cursor: pointer;
+}
+.modal .modal-content .modal-header a:hover {
+  text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px rgba(0, 0, 0, 0.19);
+}
+.modal .modal-content .modal-body {
+  font-size: 24px;
+  paddin: 10px 0px;
+}
+.modal .modal-content .modal-body .modal-form-control {
+  text-align: left;
+  display: block;
+  padding: 5px 0px;
+}
+.modal .modal-content .modal-body .modal-form-control h2 {
+  font-size: 21px;
+  display: block;
+  padding: 10px 0px;
+}
+.modal .modal-content .modal-body .modal-form-control input {
+  text-transform: uppercase;
+  width: -webkit-fill-available;
+  padding: 10px 0px;
+  text-align: center;
+  font-size: 20px;
+}
+.modal .modal-content .modal-footer {
+  padding: 10px 0px;
+  text-align: center;
+}
+.modal .modal-content .modal-footer button {
+  padding: 5px 20px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  background: blue;
+  color: white;
+}
+
+.form {
+  background: gray;
+  padding: 10px;
+}
+.form .bold {
+  font-weight: 600;
+}
+.form .text-center {
+  text-align: center;
+}
+.form .form-content {
+  margin: 0 auto;
+  max-width: 1000px;
+  background: white;
+  padding: 20px 2px;
+}
+.form .form-content .border {
+  border-bottom: 0.5px solid gray;
+}
+.form .form-content .form-header {
+  display: flex;
+  justify-content: space-evenly;
+  text-align: center;
+}
+.form .form-content .form-header img {
+  height: 100px;
+}
+.form .form-content .form-body {
+  padding: 20px 0px;
+}
+.form .form-content .form-body .questionTitle {
+  font-size: 17px;
+  padding: 10px 0px;
+}
+.form .form-content .form-body .questionTitle .block-block {
+  height: 5px;
+  margin: 5px 0px;
+  background: green;
+}
+.form .form-content .form-body .questionTitle input {
+  font-size: 17px;
+  border-radius: 8px;
+  width: -webkit-fill-available;
+}
+.form .form-content .form-body .questionAnswer, .form .form-content .form-body .questionButton {
+  margin: 10px;
+}
+.form .form-content .form-body .answerButton {
+  background: orange;
+  font-size: 17px !important;
+}
+.form .form-content .form-body .questionButton {
+  background: green;
+  font-size: 20px !important;
+}
+.form .form-content .form-body .questionQuestion {
+  max-width: 600px;
+  margin: 0 auto;
+  padding-top: 5px;
+}
+.form .form-content .form-body .questionAnswer {
+  max-width: 500px;
+  margin: 0 auto;
+  position: relative;
+}
+.form .form-content .form-body .questionAnswer .removeDesign {
+  position: absolute;
+  right: -33px;
+  top: 8px;
+}
+.form .form-content .form-body .questionAnswer .removeDesign div {
+  padding: 3px 10px;
+  border-radius: 0px !important;
+  cursor: pointer;
+  color: white !important;
+}
+
+.cat-testing {
+  display: flex;
+  justify-content: space-between;
+}
+.cat-testing p {
+  max-width: 400px;
+  text-align: left;
+}
+.cat-testing div {
+  padding: 5px 20px;
+  font-size: 15px;
+  cursor: pointer;
+  color: white;
+}
+
+.choice-border-left {
+  border-left: 4px solid orange;
+  border-bottom: 4px solid orange;
+  padding-bottom: 5px;
+}
+
+.question-border-left {
+  border-left: 4px solid green;
+  border-bottom: 4px solid green;
+}
+
+.form-group {
+  display: flex;
+  flex-wrap: wrap;
+}
+.form-group .codeAlign {
+  width: 10%;
+}
+.form-group .questionAlign {
+  width: 89%;
+}
+
+.form-control {
+  border: 0.5px solid gray;
+  margin: 3px 0px;
+  width: fit-content;
+  text-align: center;
+}
+.form-control .code {
+  text-transform: uppercase;
+  width: 34px;
+  text-align: center;
+}
+.form-control input {
+  border: none;
+  padding: 10px;
+  width: 97.5%;
+  width: -webkit-fill-available;
+}
+.form-control input:focus {
+  outline: none;
+}
+
+.delete-button {
+  background: red !important;
+  font-size: 15px;
+  border-radius: 0px;
+}
+
+.item-right {
+  text-align: right;
+}
+
+.item-center {
+  text-align: center;
+}
+
+.categoryButton {
+  margin: 0 auto;
+}
+
+.question-title {
+  font-size: 23px;
+  padding: 16px 10px 0px 10px;
+  font-weight: 600;
+}
+
+.question-form {
+  position: relative;
+}
+.question-form .question-item {
+  padding: 30px 10px;
+  font-size: 17px;
+}
+.question-form .question-item p {
+  padding: 5px 0px;
+  font-weight: 600;
+}
+.question-form .question-item p span {
+  padding: 0px 10px;
+  font-weight: 700;
+}
+.question-form .question-item .question-choices {
+  padding: 5px 0px;
+}
+.question-form .question-item .question-choices .choices-choices {
+  display: flex;
+  padding: 6px 0px;
+}
+.question-form .question-item .question-choices .choices-choices input {
+  padding: 0px 9px;
+}
+.question-form .question-item .question-choices .choices-choices span {
+  padding: 0px 10px;
+}
+.question-form .question-item .question-choices .choices-choices .choice {
+  display: flex;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.question-form .question-item .active {
+  background: green;
+  color: white;
+}
+
+.question-details {
+  padding: 0px 20px;
+}
+
+@media screen and (max-width: 730px) {
+  .form-header-details {
+    display: none;
+  }
+}
+.login-administrator {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  font-size: 17px;
+  color: blue;
+  padding: 5px;
+  cursor: pointer;
+}
+.login-administrator:hover {
+  font-weight: 600;
+}
+
+.login-form-control {
+  text-align: left;
+  display: block;
+  padding: 5px 0px;
+}
+.login-form-control h2 {
+  font-size: 21px;
+  display: block;
+  padding: 10px 0px;
+}
+.login-form-control input, .login-form-control select {
+  width: -webkit-fill-available;
+  padding: 10px 0px;
+  text-align: center;
+  font-size: 20px;
+}
+
+.fade {
+  display: none;
+}
+
+.question-version2 h1 {
+  font-size: 21px;
+}
+.question-version2 .question-box {
+  padding: 10px 4px;
+}
+.question-version2 .question-box p {
+  font-size: 18px;
+  font-weight: 600;
+}
+.question-version2 .question-box textarea {
+  resize: vertical;
+  width: 99%;
+  font-size: 18px;
+  padding: 3px;
+}
+.question-version2 .question-box .choices .form-choice {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  padding: 5px 0px;
+  font-size: 18px;
+}
+.question-version2 .question-box .choices .form-choice span {
+  width: 0px;
+  padding: 3px;
+}
+.question-version2 .question-box .choices .form-choice input, .question-version2 .question-box .choices .form-choice select {
+  width: 90%;
+  padding: 3px;
+  font-size: 18px;
+}
+.question-version2 .question-box select {
+  width: 100%;
+  padding: 3px;
+  font-size: 18px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 500;
+  padding-top: 10px;
+}
+
+.form-title {
+  width: 98%;
+  font-size: 20px;
+  padding: 3px;
+}
+
+.startActivity {
+  padding: 5px;
+}
+.startActivity .radioButton {
+  display: inline-block;
+  width: 200px;
+  height: 50px;
+  background: red;
+  border-radius: 25px;
+  padding: 3px;
+  position: relative;
+}
+.startActivity .radioButton .circle {
+  position: absolute;
+  background: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  cursor: pointer;
+}
+.startActivity .radioButton .slide-left {
+  animation: slideLeftAnimation 2s forwards;
+  transition-timing-function: ease;
+}
+.startActivity .radioButton .slide-right {
+  animation: radioAnimation 2s forwards;
+  transition-timing-function: ease;
+}
+.startActivity .online {
+  background: green !important;
+}
+
+@keyframes slideLeftAnimation {
+  0% {
+    left: 153px;
+  }
+  100% {
+    left: 3px;
+  }
+}
+@keyframes radioAnimation {
+  0% {
+    left: 2px;
+  }
+  100% {
+    left: 153px;
+  }
+}
+.qr-box {
+  text-align: center;
+}
+.qr-box p {
+  padding: 10px 0px;
+  font-size: 25px;
+}
+.qr-box #url {
+  font-size: 45px;
+  font-weight: 600;
+  text-decoration-line: underline;
+}
+
+#backgroundImage {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+
+/*# sourceMappingURL=style.css.map */

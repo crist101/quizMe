@@ -4,9 +4,279 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Question</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
-    <h1>Create Question</h1>
-    <button></button>
+    <div class="form"> 
+        <div class="form-content">
+            <div class="form-header border">
+                <h1 id="questionaire">
+                    Questionnaire Maker
+                    <p>Farmer Descriptors </p>
+                </h1>
+            </div> 
+            <p class="title">
+                Access Key: <b><ins id="accessKey"></ins></b>
+            </p>
+            <p class="title">
+                Title
+            </p>
+            <input type="text" id="title" class="form-title" >
+            <p class="title">
+                Subject
+            </p>
+            <input type="text" id="subject" class="form-title">
+            <p class="title">
+                Year and Section
+            </p>
+            <input type="text" id="yearAndSection" class="form-title">
+            <br><br>
+            <div class="question-version2">
+                
+            </div>
+            
+            <div class="form-body">
+                <div class="item-center">
+                    <button class="categoryButton" id="categoryButton">Add</button>
+                    <button class="categoryButton" id="checkForm">Check Form</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class='modal' id="modal-item" >
+        <form id="numberOfItem">
+            <div class='modal-content'>
+                <div class='modal-header'>
+                </div>
+                <div class='modal-body'>
+                <div class='login-form-control'>
+                    <h2>
+                    Type of quiz
+                    </h2>
+                    <select id="setTypeOfQuiz">
+                        <option value="multipleChoice">Multiple Choice</option>
+                        <option value="trueOfFalse">True of False</option>
+                    </select> 
+                </div>
+                <div class='login-form-control'>
+                    <h2>
+                    Number of item
+                    </h2>
+                    <input type='number' min="0"  max="50" id="setNumberOfItem"/>
+                </div>
+                </div>
+                <div class='modal-footer'>
+                    <button type="submit close-modal">Create</button>
+                    <button  type="button" class="delete-button close-modal">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+          
 </body>
 </html>
+<script>
+    $("#modal-item").hide();
+    var rand = function() {
+    return Math.random().toString(36).substr(2); // remove `0.`
+    };
+
+    var token = function() {
+        return rand() + rand(); // to make it longer
+    };
+    function generateToken(n) {
+    var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    var token = '';
+    for(var i = 0; i < n; i++) {
+        token += chars[Math.floor(Math.random() * chars.length)];
+    }
+    return token;
+}
+
+
+    $(function(){
+        var newEdit = false
+        window.onbeforeunload = function() {
+            if(newEdit){
+                return "Data will be lost if you leave the page, are you sure?";
+            }
+        };
+        var trueOrFalseQuestion = [];
+        var multipleQuestion = [];
+        var details = {accessKey:generateToken(6),title:"",subject:"",yearAndSection:""}
+        $("#accessKey").html(details.accessKey)
+        multipleQuestion.push({
+            question:"For Testing Only",
+            choices:{
+                a:"A",
+                b:"B",
+                c:"C",
+                d:"D",
+            },
+            answer:"A",
+            uniqueKey:token()
+        })
+        trueOrFalseQuestion.push({
+                question:"This is for true or false",
+                answer:true,
+                uniqueKey:token()
+            })
+        var answer = [];
+        $("#categoryButton").click(function(e){
+            $("#modal-item").show();
+        });
+        $(".close-modal").click(function(e){
+            $("#modal-item").hide();
+        })
+        $("#title").keyup(function(){
+            details.title = $(this).val();
+            newEdit = true
+        });
+        $("#subject").keyup(function(){
+            details.subject = $(this).val();
+            newEdit = true
+        });
+        $("#yearAndSection").keyup(function(){
+            details.yearAndSection = $(this).val();
+            newEdit = true
+        });
+        function showQuestion(){
+            var getData = `${multipleQuestion.length>0?`<br><hr><br><h1>Multiple Choice</h1>`:""}`;
+            multipleQuestion.forEach((item,i)=>{
+                getData += `
+                <div class="question-box">
+                    <p>${i+1}.</p>
+                    <textarea rows="3" class="question-control" table-id="${i}" forTable="multipleChoice">${item.question}</textarea>
+                    <div class="choices">
+                        <div class="form-choice">
+                            <span>A.</span><input class="answer-control" table-id="${i}" answer-id="a" type="text" forTable="multipleChoice" value="${item.choices.a}"/>
+                        </div>
+                        <div class="form-choice">
+                            <span>B.</span><input class="answer-control" table-id="${i}" answer-id="b" type="text" forTable="multipleChoice"  value="${item.choices.b}"/>
+                        </div>
+                        <div class="form-choice">
+                            <span>C.</span><input class="answer-control" table-id="${i}" answer-id="c" type="text" forTable="multipleChoice" value="${item.choices.c}"/>
+                        </div>
+                        <div class="form-choice">
+                            <span>D.</span><input class="answer-control" table-id="${i}" answer-id="d" type="text" forTable="multipleChoice" value="${item.choices.d}"/>
+                        </div>
+                    </div>
+                    <div class="form-choice">
+                        <p>Answer:</p>
+                        <select class="select-control" table-id="${i}" forTable="multipleChoice">
+                            <option value="">Select Answer</option>
+                            <option value="A" ${item.answer === "A"?"Selected":""}>A</option>
+                            <option value="B" ${item.answer === "B"?"Selected":""}>B</option>
+                            <option value="C" ${item.answer === "C"?"Selected":""}>C</option>
+                            <option value="D" ${item.answer === "D"?"Selected":""}>D</option>
+                        </select>
+                    </div>
+                </div>
+                `
+            })
+            getData += `${trueOrFalseQuestion.length>0?`<br><hr><br><h1>True or False</h1>`:""}`;
+            trueOrFalseQuestion.forEach((item,i)=>{
+                getData += `
+                <div class="question-box">
+                    <p>${i+1}.</p>
+                    <textarea rows="3" class="question-control" table-id="${i}" forTable="trueOrFalse">${item.question}</textarea>
+                    <div class="form-choice">
+                        <p>Answer:</p>
+                        <select class="select-control" table-id="${i}" forTable="trueOrFalse">
+                            <option value="">Select Answer</option>
+                            <option value="true" ${item.answer === true?"Selected":""}>True</option>
+                            <option value="false" ${item.answer === false?"Selected":""}>False</option>
+                        </select>
+                    </div>
+                </div>
+                `
+            })
+            $(".question-version2").html(getData)
+        }
+        showQuestion();
+        $(".question-version2").on("keyup",".question-control",function(){
+            if($(this).attr("forTable")==="multipleChoice"){
+                multipleQuestion[$(this).attr("table-id")].question = $(this).val();
+            }else if($(this).attr("forTable")==="trueOrFalse"){
+                trueOrFalseQuestion[$(this).attr("table-id")].question = $(this).val();
+            };
+            newEdit = true
+        });
+        $(".question-version2").on("keyup",".answer-control",function(){
+            if($(this).attr("answer-id")==="a"){
+                multipleQuestion[$(this).attr("table-id")].choices.a = $(this).val();
+            }else if($(this).attr("answer-id")==="b"){
+                multipleQuestion[$(this).attr("table-id")].choices.b = $(this).val();
+            }else if($(this).attr("answer-id")==="c"){
+                multipleQuestion[$(this).attr("table-id")].choices.c = $(this).val();
+            }else if($(this).attr("answer-id")==="d"){
+                multipleQuestion[$(this).attr("table-id")].choices.d = $(this).val();
+            };
+            newEdit = true
+        });
+        $(".question-version2").on("change",".select-control",function(){
+            
+            if($(this).attr("forTable")==="multipleChoice"){
+                trueOrFalseQuestion[$(this).attr("table-id")].answer = $(this).val();
+            }else if($(this).attr("forTable")==="trueOrFalse"){
+                trueOrFalseQuestion[$(this).attr("table-id")].answer = $(this).val();
+            };
+            newEdit = true
+        });
+
+        $("#numberOfItem").submit(function(e){
+            e.preventDefault()
+            if(multipleQuestion.length > 50){
+                alert("You've reached the maximum item(50 items only).");
+            }else{
+                console.log($("#setNumberOfItem").val())
+                for (let index = 0; index < $("#setNumberOfItem").val(); index++) {
+                    if($("#setTypeOfQuiz").val() === "multipleChoice"){
+                        if(multipleQuestion.length < 50){
+                            multipleQuestion.push({
+                                question:"",
+                                choices:{
+                                    a:"",
+                                    b:"",
+                                    c:"",
+                                    d:"",
+                                },
+                                answer:"",
+                                uniqueKey:token()
+                            })
+                        }
+                    }else if($("#setTypeOfQuiz").val() === "trueOfFalse"){
+                        trueOrFalseQuestion.push({
+                                question:"",
+                                choices:{
+                                    a:"",
+                                    b:"",
+                                },
+                                answer:"",
+                                uniqueKey:token()
+                            })
+                    }
+                }
+            }
+            showQuestion();
+            $("#modal-item").hide();;
+            newEdit = true
+        });
+        $("#checkForm").click(function(){
+            console.log({
+                title:details.title,
+                subject:details.subject,
+                yearAndSection:details.yearAndSection,
+                accessKey:generateToken(6),
+                question:[{
+                    type:"multipleChoice",
+                    question:multipleQuestion
+                },{
+                    type:"trueOrFalse",
+                    question:trueOrFalseQuestion
+                }]
+            })
+        });
+    });
+</script>   

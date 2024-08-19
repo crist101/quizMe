@@ -1,17 +1,85 @@
 from django.shortcuts import render
-from django.http import HttpResponse,JsonResponse,Http404
+from django.http import HttpResponse,JsonResponse,Http404,HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate
-from .models import userToken,generatedCode,userAccount
 import socket
+from .models import quizRecord
+import json,datetime
 
 #
 def home(request):
-    return render(request,"index.html")
+    if request.method == "POST":
+        try:
+            item_dict = json.loads(request.POST["question"])
+            checkAccessKey = request.POST["setAccessKey"]
+            list = {
+                "accessKey":request.POST["accessKey"],
+                "title":request.POST["title"],
+                "subject":request.POST["subject"],
+                "yearAndSection":request.POST["yearSection"],
+                "questionnaire":item_dict,
+                "dateCreated":datetime.datetime.now(),
+                "multipleChoice":len(item_dict[0]["question"]),
+                "trueOrFalse":len(item_dict[1]["question"]),
+                "total": int(len(item_dict[1]["question"])+int(len(item_dict[0]["question"])))
+                }
+            try:
+                getquizRecord = quizRecord.objects.get(accessKey = checkAccessKey)
+                getquizRecord.title = list["title"]
+                getquizRecord.subject = list["subject"]
+                getquizRecord.yearAndSection = list["yearAndSection"]
+                getquizRecord.questionnaire = list["questionnaire"]
+                getquizRecord.multipleChoice = list["multipleChoice"]
+                getquizRecord.trueOrFalse = list["trueOrFalse"]
+                getquizRecord.totalItem = list["total"]
+                getquizRecord.save()
+                return HttpResponseRedirect('/admin/record/quizrecord/')
+            except:
+                pass
+            try:
+                quizRecord.objects.create(accessKey = list["accessKey"], title = list["title"], subject= list["subject"], yearAndSection = list["yearAndSection"], questionnaire = list["questionnaire"], multipleChoice = list["multipleChoice"], trueOrFalse = list["trueOrFalse"], totalItem = list["total"], dateCreated = list["dateCreated"])
+                return HttpResponseRedirect('/admin/record/quizrecord/')
+            except:
+                pass
+            return JsonResponse(["Error"],safe=False)
+        except:
+            return JsonResponse(["Error"],safe=False)
+    q = ""
+    try:
+        q = request.GET["q"]
+    except:
+        q = ""
+    return render(request,"index.html",{"q":q})
+
+def startActivity(request,accessKey):
+    return render(request,"activity.html",{"q":accessKey})
+
+
+def requestAccessKey(request,accessKey):
+    if request.method == "POST":
+        record = []
+        try:
+            data = quizRecord.objects.get(accessKey = accessKey)
+            record = [
+            {
+                "accessKey":data.accessKey,
+                "title":data.title,
+                "subject":data.subject,
+                "yearAndSection":data.yearAndSection,
+                "multipleChoice":data.questionnaire[0],
+                "trueOrFalse":data.questionnaire[1],
+            }
+        ]
+        except:
+            record = []
+        return JsonResponse(record,safe=False)
+        
+    return JsonResponse([False],safe=False)
 
 # Create your views here.
 def index(request):
     return JsonResponse([socket.gethostbyname(socket.gethostname())],safe=False)
+
 @csrf_exempt
 def record(request):
     return JsonResponse(
@@ -98,55 +166,3 @@ def record(request):
         ],safe=False
     )
 
-
-class profile:
-    @csrf_exempt
-    def authenticateUser(request):
-        count = False
-        if request.method == "POST":
-            try:
-                userToken.objects.get(token = request.POST["q"])
-                count = True
-            except:
-                count = False
-            return JsonResponse([count],safe=False)
-        return Http404
-    
-    @csrf_exempt
-    def login(request):
-        if request.method == "POST":
-            user = authenticate(request, username = request.POST["username"], password= request.POST["password"])
-            if user is not None:
-                try:
-                    setToken = generatedCode()
-                    userToken.objects.create(token=setToken,registeredUser = user)
-                    return JsonResponse({"message":True,"user":setToken},safe=False)
-                except:
-                    return JsonResponse({"message":False},safe=False)    
-            return JsonResponse({"message":False},safe=False)
-        else:
-            return JsonResponse(["Request Failed"],safe=False)
-        
-    @csrf_exempt
-    def profile(request):
-        if request.method == "POST":
-            try:
-                profileData = userToken.objects.get(token = request.POST["token"])
-                verifiedAccount = False
-                testAccount = 0
-                try:
-                    testAccount = userAccount.objects.get(registeredUser = profileData.registeredUser)
-                    verifiedAccount = True
-                except:
-                    pass 
-                x = {
-                    "email":profileData.registeredUser.email,
-                    "username":profileData.registeredUser.username,
-                    "verified":verifiedAccount,
-                    "tester":profileData.id
-                }
-                return JsonResponse({"message":True,"profile":x},safe=False)
-            except:
-                return JsonResponse({"message":False},safe=False)
-        return JsonResponse({"message":False},safe=False)
-        

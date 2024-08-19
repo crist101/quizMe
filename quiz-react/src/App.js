@@ -11,6 +11,7 @@ import headerLogo from "./images/navigation.jpg"
 import Questionaire from './Questionaire';
 import DusQuestionaire from './NSICQuestionaire';
 import samplequestionaire from "./sampleQuestion.json";
+import { useCookies } from 'react-cookie';
 
 function LoginAdministrator(){
   return (
@@ -23,7 +24,18 @@ function LoginAdministrator(){
 function LoginController(){
   let navigate = useNavigate();
   const [modalController, setModalController ] = useState(false)
+  const [cookies, setCookie] = useCookies(['quizApp']);
   const [administartorModalController, setAdministartorModalController ] = useState(false)
+  const [identities,setIdentities] = useState({
+    username: "",
+    password:"",
+    csrfmiddlewaretoken:"478ef26b83a4e405e9c6589226d996f471406ed5faeccaf17c3237d3e163a614"
+  });
+  const [ctrl, setCtrl] = useState({
+    loading: false,
+    checkCredentials: false,
+    error: false
+  });
 
   const modalHandler = (val)=>{
     setModalController(val);
@@ -43,8 +55,35 @@ function LoginController(){
       .catch((error)=>console.log(error));
   }
 
-  const logInController = ()=>{
+  const inputHandler = (data,val)=>{
+    setIdentities({...identities,[`${data}`]:val})
+  }
+  const loginHandler = ()=>{
 
+    const datetoday = new Date();
+    datetoday.setDate(datetoday.getDate()+1);
+    setCtrl({...ctrl,checkCredentials:false,loading:true,error:false});
+    axios({
+      method: "post",
+      url: `http://${window.location.hostname}:8000/api/login`,
+      data: identities,
+      headers: { "Content-Type": "multipart/form-data" },
+      timeout: 5000
+    })
+    .then(function (response) {
+      if(response.data.error === undefined){
+        const datetoday = new Date();
+        datetoday.setDate(datetoday.getDate()+365);
+        setCookie('rtoken',response.data.user,{expires:datetoday})
+        window.location.replace("/home");
+      }else{
+        setCtrl({...ctrl,checkCredentials:true,loading:false});
+      }
+    })
+    .catch(function (error) {
+      console.log(error)
+      setCtrl({...ctrl,checkCredentials:false,error:true,loading:false});
+    });
   }
 
     return(
@@ -60,21 +99,34 @@ function LoginController(){
                 <a onClick={(e)=>(setAdministartorModalController(false))}>✖</a>
               </div>
               <div className='modal-body'>
-                <div className='modal-form-control'>
+                <div className='login-form-control'>
                   <h2>
                   Username
                   </h2>
-                  <input type='text'/>
+                  <input type='text' onChange={(e)=>(inputHandler("username",e.target.value))}/>
                 </div>
-                <div className='modal-form-control'>
+                <div className='login-form-control' onChange={(e)=>(inputHandler("password",e.target.value))} >
                   <h2>
                   Password
                   </h2>
                   <input type='text'/>
                 </div>
+                {ctrl.checkCredentials?
+                <p className='animate__animated animate__shakeX danger-alert'>
+                  Wrong credentials
+                </p>
+                :<></>
+                }
+                {ctrl.error?
+                  <p className='animate__animated animate__shakeX danger-alert'>
+                    Something went wrong, please check your connection or try again later.
+                  </p>
+                  :
+                  <></>
+                }
               </div>
               <div className='modal-footer'>
-                  <button onClick={(e)=>(submitQuizCode(true))}>Log In</button>
+                  <button onClick={(e)=>(loginHandler(e))}>Log In</button>
               </div>
             </div>
           </div>

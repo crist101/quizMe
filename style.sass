@@ -1,3 +1,356 @@
 *
-    padding: 0
-    margin: 0
+    padding: 0px
+    margin: 0px
+    font-family: 'arial'
+
+button
+    padding: 5px 20px
+    border-radius: 10px
+    border: none
+    cursor: pointer
+    font-size: 24px
+    background: blue
+    color: white
+.modal
+    position: fixed
+    top: 0px
+    left: 0px
+    width: 100%
+    height: 100%
+    backdrop-filter: blur(5px)
+    display: grid
+    place-content: center
+    .modal-content
+        max-width: 700px
+        width: 350px
+        background: white  
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+        border-radius: 9px
+        padding: 10px
+        .modal-header
+            text-align: right
+            display: flex
+            justify-content: space-between
+            h1
+                font-size: 24px
+            a
+                font-size: 24px
+                cursor: pointer
+                &:hover
+                    text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px rgba(0, 0, 0, 0.19)
+        
+        .modal-body
+            font-size: 24px
+            paddin: 10px 0px
+            .modal-form-control
+                text-align: left
+                display: block
+                padding: 5px 0px
+                h2
+                    font-size: 21px
+                    display: block
+                    padding: 10px 0px
+                input
+                    text-transform: uppercase
+                    width: -webkit-fill-available
+                    padding: 10px 0px
+                    text-align: center
+                    font-size: 20px
+        .modal-footer
+            padding: 10px 0px
+            text-align: center
+            button
+                padding: 5px 20px
+                border-radius: 10px
+                border: none
+                cursor: pointer
+                font-size: 24px
+                background: blue
+                color: white
+
+.form
+    background: gray
+    padding: 10px
+    .bold
+        font-weight: 600
+    .text-center
+        text-align: center
+    .form-content
+        margin: 0 auto
+        max-width: 1000px
+        background: white
+        padding: 20px 2px
+        .border
+            border-bottom: .5px solid gray
+        .form-header
+            display: flex
+            justify-content: space-evenly
+            text-align: center
+            img
+                height: 100px
+        .form-body
+            padding: 20px 0px
+            .questionTitle
+                font-size: 17px
+                padding: 10px 0px
+                .block-block
+                    height: 5px
+                    margin: 5px 0px
+                    background: green
+                input
+                    font-size: 17px
+                    border-radius: 8px
+                    width: -webkit-fill-available
+            .questionAnswer,.questionButton
+                margin: 10px 
+            .answerButton
+                background: orange
+                font-size: 17px !important
+            .questionButton
+                background: green
+                font-size: 20px !important
+            .questionQuestion
+                max-width: 600px
+                margin: 0 auto
+                padding-top: 5px
+            .questionAnswer
+                max-width: 500px
+                margin: 0 auto
+                position: relative
+                .removeDesign
+                    position: absolute
+                    right:-33px
+                    top: 8px
+                    div
+                        padding: 3px 10px
+                        border-radius: 0px !important
+                        cursor: pointer
+                        color: white !important
+
+.cat-testing
+    display: flex
+    justify-content: space-between
+    p
+        max-width: 400px
+        text-align: left
+    div
+        padding: 5px 20px
+        font-size: 15px
+        cursor: pointer
+        color: white
+       
+
+.choice-border-left
+    border-left: 4px solid orange
+    border-bottom: 4px solid orange
+    padding-bottom: 5px
+
+.question-border-left
+    border-left: 4px solid green
+    border-bottom: 4px solid green
+
+.form-group
+    display: flex
+    flex-wrap: wrap
+    .codeAlign
+        width: 10%
+    .questionAlign
+        width: 89%
+.form-control
+    border: .5px solid gray
+    margin: 3px 0px
+    width: fit-content
+    text-align: center
+    .code
+        text-transform: uppercase
+        width: 34px
+        text-align: center
+        
+    input
+        border: none
+        padding: 10px
+        width: 97.5%
+        width: -webkit-fill-available
+        &:focus
+            outline: none
+
+.delete-button
+    background: red !important
+    font-size: 15px
+    border-radius: 0px
+
+.item-right
+    text-align: right
+
+.item-center
+    text-align: center
+.categoryButton
+    margin: 0 auto
+.question-title
+    font-size: 23px
+    padding: 16px 10px 0px 10px
+    font-weight: 600
+.question-form
+    position: relative
+    .question-item
+        padding: 30px 10px
+        font-size: 17px
+        p
+            padding: 5px 0px
+            font-weight: 600
+            span
+                padding: 0px 10px
+                font-weight: 700
+        .question-choices
+            padding: 5px 0px
+            .choices-choices
+                display: flex
+                padding: 6px 0px
+                input
+                    padding: 0px 9px
+                span
+                    padding: 0px 10px
+                .choice
+                    display: flex 
+                    padding: 5px
+                    border-radius: 5px
+                    cursor: pointer
+        .active
+            background: green
+            color: white
+
+.question-details
+    padding: 0px 20px
+
+
+@media screen and (max-width: 730px)
+    .form-header-details
+        display: none
+
+.login-administrator
+    position: absolute
+    top: 0px
+    right: 0px
+    font-size: 17px
+    color: blue
+    padding: 5px
+    cursor: pointer
+    &:hover
+        font-weight: 600
+
+.login-form-control
+
+    text-align: left
+    display: block
+    padding: 5px 0px
+    h2
+        font-size: 21px
+        display: block
+        padding: 10px 0px
+    input,select
+        width: -webkit-fill-available
+        padding: 10px 0px
+        text-align: center
+        font-size: 20px
+
+.fade
+    display: none
+
+.question-version2
+    h1
+        font-size: 21px
+    .question-box
+        padding: 10px 4px
+        p
+            font-size: 18px
+            font-weight: 600
+        textarea
+            resize: vertical
+            width: 99%
+            font-size: 18px
+            padding: 3px
+        .choices
+            .form-choice
+                display: flex
+                flex-wrap: wrap
+                justify-content: space-evenly
+                padding: 5px 0px
+                font-size: 18px
+                span
+                    width: 0px
+                    padding: 3px
+                input,select
+                    width: 90%
+                    padding: 3px
+                    font-size: 18px
+        select
+            width: 100%
+            padding: 3px 
+            font-size: 18px
+
+.title
+    font-size: 20px
+    font-weight: 500
+    padding-top: 10px
+
+.form-title
+    width: 98%
+    font-size: 20px
+    padding: 3px
+
+
+.startActivity
+    padding: 5px
+    .radioButton
+        display: inline-block
+        width:200px
+        height: 50px
+        background: red
+        border-radius: 25px
+        padding: 3px
+        position: relative
+
+        .circle
+            position: absolute
+            background: white
+            width: 50px
+            height: 50px
+            border-radius: 25px
+            cursor: pointer
+
+        .slide-left
+            animation: slideLeftAnimation 2s forwards
+            transition-timing-function: ease
+
+        .slide-right
+            animation: radioAnimation 2s forwards
+            transition-timing-function: ease
+    .online
+        background: green !important
+
+@keyframes slideLeftAnimation
+    0%
+        left: 153px
+    100%
+        left: 3px
+
+@keyframes radioAnimation
+    0%
+        left: 2px
+    100%
+        left: 153px
+
+.qr-box
+    text-align: center
+    p
+        padding: 10px 0px
+        font-size: 25px
+    #url
+        font-size: 45px
+        font-weight: 600
+        text-decoration-line: underline
+
+#backgroundImage
+    position: absolute
+    bottom: 0px
+    right: 0px
