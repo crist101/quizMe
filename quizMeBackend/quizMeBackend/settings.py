@@ -25,8 +25,7 @@ SECRET_KEY = 'django-insecure-ki%f%446(f-0)sx=t3mq7__7t$6jw*(7@ny%l35ihw*27!v7oa
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [f"{socket.gethostbyname(socket.gethostname())}"]
-
+ALLOWED_HOSTS = [f"{socket.gethostbyname(socket.gethostname())}","*"]
 
 # Application definition
 

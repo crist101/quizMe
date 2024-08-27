@@ -14,20 +14,32 @@
         <div class="form-content">
             <div class="form-header border">
                 <h1 id="questionaire">
-                    <p>TLE</p>
+                    <p>{{data.title}}</p>
                 </h1>
             </div> 
+            <p style="font-size: 35px">Subject: <b>{{data.subject}}</b></p>
+            <p style="font-size: 25px">Year and Section: <b>{{data.yearAndSection}}</b></p>
             <div class="startActivity">
-                <h1 id="status">Offline</h1>
-                <div class="radioButton">
-                    <div class="circle">
+                {% if data.online %}
+                <h1 id="status">Online</h1>
+                <div class="radioButton online">
+                    <div class="circle slide-right">
 
                     </div>
                 </div>
+                {% else %}
+                <h1 id="status">Offline</h1>
+                <div class="radioButton">
+                    <div class="circle ">
+
+                    </div>
+                </div>
+                {% endif %}
             </div>
             <div class="qr-box">
                 <div id="qrcodeholder"> </div>
                 <p>Scan Me</p>
+                <p style="font-weight:600; font-size: 35px;">Quiz Code: {{q}}</p>
                 <br>
                 <br>
                 <p>or</p>
@@ -43,6 +55,7 @@
     $(function(){
         var imgSad = "{% static 'sad.png' %}";
         var imgOnline = "{% static 'happy.png' %}";
+        $("#backgroundImage").attr('src',"{% if data.online  %}{% static 'happy.png' %}{% else %}{% static 'sad.png' %}{% endif %}");
         $("#url").html(`http://${window.location.hostname}:3000`)
             $('#qrcodeholder').qrcode({
                     text	: `http://${window.location.hostname}:3000`,
@@ -52,7 +65,7 @@
                     width : 350,
                     height: 350,
                 });
-        var rad = false;
+        var rad = {% if data.online  %}true{% else %}false{% endif %};
         $(".radioButton").click(function(){
             if(rad){
                 $("#status").html("Offline")

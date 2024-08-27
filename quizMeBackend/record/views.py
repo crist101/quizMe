@@ -5,8 +5,10 @@ from django.contrib.auth import authenticate
 import socket
 from .models import quizRecord
 import json,datetime
+from django.contrib.auth.decorators import login_required
 
 #
+@login_required(login_url="/admin")
 def home(request):
     if request.method == "POST":
         try:
@@ -52,8 +54,11 @@ def home(request):
     return render(request,"index.html",{"q":q})
 
 def startActivity(request,accessKey):
-    return render(request,"activity.html",{"q":accessKey})
-
+    try: 
+        data = quizRecord.objects.get(accessKey = accessKey)
+        return render(request,"activity.html",{"q":accessKey,"data":data})
+    except:
+        return JsonResponse(["Record not found"],safe=False)
 
 def requestAccessKey(request,accessKey):
     if request.method == "POST":
@@ -77,6 +82,7 @@ def requestAccessKey(request,accessKey):
     return JsonResponse([False],safe=False)
 
 # Create your views here.
+
 def index(request):
     return JsonResponse([socket.gethostbyname(socket.gethostname())],safe=False)
 

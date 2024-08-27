@@ -88,51 +88,6 @@ function LoginController(){
 
     return(
       <>
-      <div className='login-administrator' onClick={(e)=>(setAdministartorModalController(true))} >
-        Log in as Administrator
-      </div>
-      {administartorModalController?
-          <div className='modal'>
-            <div className='modal-content'>
-              <div className='modal-header'>
-                <h1></h1>
-                <a onClick={(e)=>(setAdministartorModalController(false))}>✖</a>
-              </div>
-              <div className='modal-body'>
-                <div className='login-form-control'>
-                  <h2>
-                  Username
-                  </h2>
-                  <input type='text' onChange={(e)=>(inputHandler("username",e.target.value))}/>
-                </div>
-                <div className='login-form-control' onChange={(e)=>(inputHandler("password",e.target.value))} >
-                  <h2>
-                  Password
-                  </h2>
-                  <input type='text'/>
-                </div>
-                {ctrl.checkCredentials?
-                <p className='animate__animated animate__shakeX danger-alert'>
-                  Wrong credentials
-                </p>
-                :<></>
-                }
-                {ctrl.error?
-                  <p className='animate__animated animate__shakeX danger-alert'>
-                    Something went wrong, please check your connection or try again later.
-                  </p>
-                  :
-                  <></>
-                }
-              </div>
-              <div className='modal-footer'>
-                  <button onClick={(e)=>(loginHandler(e))}>Log In</button>
-              </div>
-            </div>
-          </div>
-        :
-        <></>
-        }
         <header className="App-header">
           <img src={schoolLogo} className="App-logo" alt="logo" />
           <p>
