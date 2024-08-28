@@ -28,7 +28,7 @@ class quizStudentData(models.Model):
     middleName = models.CharField(max_length=155)
     answer = models.JSONField()
     score = models.IntegerField()
-    dateTaken = models.DateTimeField(datetime.datetime.now)
+    dateTaken = models.DateTimeField(default=datetime.datetime.now)
     
     def __str__(self) -> str:
         return f"{self.record.title} | {self.lastName}, {self.givenName} | {self.score}/{self.record.totalItem}"

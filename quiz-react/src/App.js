@@ -23,7 +23,7 @@ function LoginAdministrator(){
 
 function LoginController(){
   let navigate = useNavigate();
-  const [modalController, setModalController ] = useState(false)
+  const [modalController, setModalController ] = useState(true)
   const [cookies, setCookie] = useCookies(['quizApp']);
   const [administartorModalController, setAdministartorModalController ] = useState(false)
   const [identities,setIdentities] = useState({
@@ -36,23 +36,33 @@ function LoginController(){
     checkCredentials: false,
     error: false
   });
+  const [formData, setFormData] = useState({
+    quizCode:"",
+    lrn:"",
+    lastName:"",
+    firstName:"",
+    middleName:"",
+    csrfmiddlewaretoken:"478ef26b83a4e405e9c6589226d996f471406ed5faeccaf17c3237d3e163a614"
+  })
 
   const modalHandler = (val)=>{
     setModalController(val);
   }
 
   const submitQuizCode = (val)=>{
+    console.log(formData)
     //console.log("TEsting")
-    axios({
-        method: "post",
-        url: `http://${window.location.hostname}:8000/api/getRecord`,
-        timeout: 5000
-      })
-      .then((response)=>{
-        console.log(response.data)
-          navigate('/quiz/no/2374890230498073532089')
-      })
-      .catch((error)=>console.log(error));
+    // axios({
+    //     method: "post",
+    //     url: `http://${window.location.hostname}:8000/api/getRecord`,
+    //     timeout: 5000
+    //   })
+    //   .then((response)=>{
+    //     console.log(response.data)
+    //       navigate('/quiz/no/2374890230498073532089')
+    //   })
+    //   .catch((error)=>console.log(error));
+
   }
 
   const inputHandler = (data,val)=>{
@@ -115,31 +125,31 @@ function LoginController(){
                   <h2>
                   Enter Quiz Code
                   </h2>
-                  <input type='text'/>
+                  <input type='text' onChange={(e)=>(setFormData({...formData,quizCode:e.target.value}))}/>
                 </div>
                 <div className='modal-form-control'>
                   <h2>
                   Learner Reference Number (LRN)
                   </h2>
-                  <input type='text'/>
+                  <input type='text' onChange={(e)=>(setFormData({...formData,lrn:e.target.value}))}/>
                 </div>
                 <div className='modal-form-control'>
                   <h2>
                   Last Name
                   </h2>
-                  <input type='text'/>
+                  <input type='text' onChange={(e)=>(setFormData({...formData,lastName:e.target.value}))}/>
                 </div>
                 <div className='modal-form-control'>
                   <h2>
                   First Name
                   </h2>
-                  <input type='text'/>
+                  <input type='text' onChange={(e)=>(setFormData({...formData,firstName:e.target.value}))}/>
                 </div>
                 <div className='modal-form-control'>
                   <h2>
                   Middle Name
                   </h2>
-                  <input type='text'/>
+                  <input type='text' onChange={(e)=>(setFormData({...formData,middleName:e.target.value}))}/>
                 </div>
               </div>
               <div className='modal-footer'>

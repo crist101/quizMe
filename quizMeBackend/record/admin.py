@@ -18,3 +18,8 @@ class quizRecordAdmin(admin.ModelAdmin):
         return format_html(f"""<a href='../../../../form/control/startExam/{obj.accessKey}' target='{obj.accessKey}'>Start exam</a>
                            <hr><a href='../../../../form/output/{obj.accessKey}' target='{obj.accessKey}'>View report</a>""")
     
+@admin.register(quizStudentData)
+class quizStudentDataAdmin(admin.ModelAdmin):
+    model = quizStudentData
+    list_display = ["lrn","lastName","givenName","middleName","score","dateTaken"]
+    search_fields = ["lrn","lastName","givenName","middleName"]
