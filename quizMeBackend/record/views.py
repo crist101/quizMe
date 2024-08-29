@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse,Http404,HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate
-import socket
-from .models import quizRecord
+import socket,random
+from .models import quizRecord,quizStudentData
 import json,datetime
 from django.contrib.auth.decorators import login_required
 
@@ -86,8 +86,36 @@ def requestAccessKey(request,accessKey):
 def index(request):
     return JsonResponse([socket.gethostbyname(socket.gethostname())],safe=False)
 
+def removeAnswerQuestionaire(data):
+    # Key to remove
+    key_to_remove = "answer"
+
+    for category in data:
+        for item in category["question"]:
+            # Remove the key if it exists
+            if key_to_remove in item:
+                removed_value = item.pop(key_to_remove)
+
+    # Save the updated JSON data
+    return data
+
 @csrf_exempt
 def record(request):
+    if request.method == "POST":
+        try:
+            getStudentRecord = quizStudentData.objects.get(studentAccessKey = request.POST["form"])
+            return JsonResponse({
+                "access":True,
+                "studentName": f"{getStudentRecord.lastName}, {getStudentRecord.givenName} {getStudentRecord.middleName}".upper(),
+                "studentLrn":getStudentRecord.lrn,
+                "title":getStudentRecord.record.title,
+                "subject":getStudentRecord.record.subject, 
+                "quizForm":removeAnswerQuestionaire(getStudentRecord.record.questionnaire),
+                },safe=False)
+        except:
+            return JsonResponse({"access":False},safe=False)
+    return JsonResponse([False],safe=False)
+
     return JsonResponse(
         [
             {
@@ -172,3 +200,28 @@ def record(request):
         ],safe=False
     )
 
+def generatedCode():
+    generatedCode_ = '%64x' % random.getrandbits(16*16)
+    try:
+        quizStudentData.objects.get(studentAccessKey = generatedCode_)
+        generatedCode()
+    except:
+        return generatedCode_ 
+
+@csrf_exempt
+def logInQuiz(request):
+    if request.method == "POST":
+        try:
+            lrn = request.POST["lrn"]
+            lastName = request.POST["lastName"]
+            givenName = request.POST["firstName"]
+            middleName = request.POST["middleName"]
+            studentAccessKey = generatedCode()
+            
+            getRecord = quizRecord.objects.get(accessKey= request.POST["quizCode"].upper())
+            quizStudentData.objects.create(record=getRecord,lrn = lrn, lastName = lastName,givenName = givenName,middleName = middleName, studentAccessKey = studentAccessKey,dateTaken = datetime.datetime.now(), score = 0, answer = {})
+            return JsonResponse({"access":True,"studentAccessKey":studentAccessKey},safe=False)
+        except:
+            return JsonResponse({"access":False},safe=False)
+        return JsonResponse([request.POST["quizCode"]],safe=False)
+    return JsonResponse([False],safe=False)

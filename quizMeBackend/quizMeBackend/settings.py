@@ -53,9 +53,11 @@ MIDDLEWARE = [
 ]
 CORS_ALLOWED_ORIGINS = [
     f"http://{socket.gethostbyname(socket.gethostname())}:3000",
+    "http://192.168.68.109:3000"
 ]
 CSRF_TRUSTED_ORIGINS =[
     f"http://{socket.gethostbyname(socket.gethostname())}:3000",
+    "http://192.168.68.109:3000"
 ]
 CORS_ALLOW_METHODS = (
     "DELETE",
